@@ -1,0 +1,201 @@
+0 v=13*4096:pokev+24,21:pokev+32,3:pokev+33,0:co=v+256*8:crt=1024
+4 :
+13 :
+14 :
+80 mode=0
+90 pg$="{space*5}":nm$="19":goto62000
+100 :
+110 f=42:fc=20
+120 goto1500
+140 p=0:c=9:m=crt+542:k=m:l=m:i=9:j=9:
+145 q=13*4096+4*256:pokeq+4,32:pokeq+11,0:pokeq+18,0:pokeq+24,15
+146 pokeq+2,0:pokeq+3,8:pokeq+5,0:pokeq+6,240:pokeq+23,240
+150 y=0:cc=crt+142:dd=crt+702:ee=crt+502:ff=crt+302:g=crt+790
+170 print"{clear}{light green}";:o=500+e:x=crt+39
+200 a$="{home}{down*14}{right*11}":b$="{home}{down*10}{right*11}"
+210 c$="{home}{down*6}{right*11}"
+220 print:print"{home}{down*13}"tab(35)"{orange}{221}"
+230 printtab(33)"{orange}{221} {reverse on} {reverse off}":r$="{reverse on}{light blue}{space*24}{light green}"
+240 printtab(33)"{orange}{reverse on} {reverse off} {reverse on} {reverse off} {221}"
+250 printtab(33)"{orange}{reverse on} {reverse off} {reverse on} {reverse off} {reverse on} {reverse off}"
+260 printtab(33)"{orange}{reverse on} {reverse off} {reverse on} {reverse off} {reverse on} {reverse off}"
+270 print"{brown} {164*13}"spc(19)"{orange}{reverse on} {reverse off} {221} {reverse on} {reverse off}"
+280 print"{brown}{reverse on}{169}{163}{space*11}{206}{204}{reverse off}"spc(18)"{orange}{221} {221} {reverse on} {reverse off}"
+290 print"{brown}{reverse on}{192}{207}{208}{197}{207}{208}{205}{178}{207}{197}{196}{207}{163}{165*2}{reverse off}{204}{green}{175}{185}{162}{reverse on}{184}{183}{163*4}{183*2}{184*2}{reverse off}{162}{185*2}{175}{orange}{221}{green}{175}{orange}{221}{green}{175}{orange}{221}{green}{164*2}";
+300 print"{brown}{reverse on}{165*2}{167} {165}{167} {221}{165}  {165} {165}{167*2}{light blue}{space*17}{reverse off}{orange}{221}{reverse on}{light blue} {reverse off}{orange}{221}{reverse on}{light blue} {reverse off}{orange}{221}{reverse on}{light blue}  ";
+310 print"{brown}{reverse on}{165*2}  {165}{167} {221}   {165} {165}{167*2}{light blue}{space*19}{reverse off}{orange}{221}{reverse on}{light blue}    ";
+320 print"{light blue}  {brown}{reverse off}{223}{reverse on} {165}{167} {164}{185}{164} {reverse off}{169}{reverse on}{light blue}    {reverse off}"r$;
+330 ifmo>0thenprint"{reverse on}{light blue}{space*13}hit 'q' to end    skill"t"{left} {left*3} {reverse off}{light green}";
+331 ifmo=0thenprint"{reverse on}{light blue}{space*13}frog!  hit a key to play  {light green}";
+335 pokecrt+999,160:pokeco+999,14
+350 print"{reverse off}{light green}{home}{down*8}{right}{space*11}"
+360 print"{right}{space*11}"
+370 print"{right}{space*11}"
+380 print"{right}{space*11}"
+390 print"{right}    {164}{175}{185}{175}   "
+400 print"{right}   {reverse on}{169}  (q{223}{reverse off} "
+470 printspc(9)"{183}{184}{home}"
+480 o=o-(y+e)
+500 pokeq+1,255:pokeq+4,33:o=o-1-e/15:pokeq+4,0:ifo<0theno=0
+508 print"{purple}{home}{down}{right}"int(o)"{left} calories ";tab(29)p;" bugs":ifo<1then1230
+509 fori=40*tto240:next
+510 ifmode>0then520
+511 getd$:ifd$>""thenpoke198,0:mode=1:pn=0:gosub62000:goto120
+512 ifg>crt+260andg<crt+263theny=9:goto550
+513 ifg>crt+420andg<crt+423theny=6:goto550
+514 ifg>crt+580andg<crt+583theny=3:goto550
+515 ifft<fcthen1740
+516 ft=1:d%=int(rnd(1)*3)+4
+517 ifg<crt+350thend%=d%+3
+518 ifg>crt+560thend%=d%-3
+519 y=d%:goto550
+520 getd$:ifd=1andd$=""then1740
+530 ifd$=""thenpokem,32:goto750
+534 ifd$="q"then1230
+540 y=val(d$):ify<1then520
+550 ify=1ory=4ory=7thenx=6:goto580
+560 ify=2ory=5ory=8thenx=12:goto580
+570 ify=3ory=6ory=9thenx=18
+580 ify>6then660
+590 ify>3then630
+600 pokeq+1,0:pokeq+4,33:printa$;:fora=1tox:print"{pink}{195}{201}{left}";:pokeq+1,a*2
+610 b=a:aa=crt+572+a:ifpeek(aa)=fthengosub1160:a=x
+620 next:forx=1tob:print"{pink}{left}{203} {left*2}";:next:print" ":pokeq+4,0:goto690
+630 gosub840:pokeq+1,0:pokeq+4,33::printb$;:fora=1tox:print"{pink}{192}{201}{left}";
+640 pokeq+1,a*2:b=a:aa=crt+412+a:ifpeek(aa)=fthengosub1160:a=x
+650 next:forx=1tob:print"{pink}{left}{203} {left*2}";:next:print" ":pokeq+4,0:goto690
+660 gosub840:pokeq+1,0:pokeq+4,33:gosub1000:printc$;:fora=1tox:print"{pink}{192}{201}{left}";
+670 pokeq+1,a*2:b=a:aa=crt+252+a:ifpeek(aa)=fthengosub1160:a=x
+680 next:forx=1tob:print"{left}{203} {left*2}";:next:print" ":pokeq+4,0:gosub840
+690 ifaa=kthenk=ee:goto720
+700 ifaa=lthenl=ee-40:goto720
+710 ifaa=mthenm=ee-80
+720 y=x:ifd=1theny=y/3
+730 ifz=95thenz=0:o=o+(y+e)
+740 poke198,0:fc=20:goto350
+750 n=rnd(1):pokek,32:pokel,32:pokem,32
+760 ifn<.1126thenpokeq+1,240:pokeq+4,33:m=m+1:k=k-41:l=l+40:c=c-1:i=i-1:goto800
+770 ifn<.2253thenpokeq+1,248:pokeq+4,33:m=m-1:k=k-1:l=l-1:c=c-1:i=i-1:j=j-1:goto800
+780 ifn<.5379thenpokeq+1,255:pokeq+4,33:m=m+40:k=k-39:l=l-40:i=i+1:goto800
+790 m=m-40:k=k+1:l=l+41:i=i+1:j=j+1
+800 pokeq+4,0:ifm<ccorm>ddorc<1orc>17thenc=9:m=ee
+810 pokeco+m-cr,1:pokem,f:ifl<ccorl>ddorj<1orj>17thenj=9:l=ee
+820 pokeco+l-cr,1:pokel,f:ifk<ccork>ddori<1ori>17theni=9:k=ee
+822 ifm=lorm=korl=kthen750
+824 pokeco+l-cr,1:pokeco+k-cr,1:pokeco+m-cr,1:pokel,f:pokek,f:pokem,f:goto500
+840 print"{home}{light green}{down*4}{right}{space*11}"
+850 print"{right}{space*11}"
+860 print"{right}{space*11}"
+870 print"{right}{space*11}"
+880 print"{right}    {164}{175}{185}{175}   "
+890 print"{right}   {reverse on}{169}  (q{223}{reverse off} "
+900 print"{right}  {reverse on}{169}    ' {213}{reverse off}"
+910 print"{right} {reverse on}{169}{space*5}) {reverse off}{169}"
+920 print"{right}{reverse on}{169}{space*7}{reverse off}{169} "
+930 print"{right}{reverse on}{206}{163*5}{205} {reverse off}  "
+940 print"{right}{223}{reverse on}    , ){223}{reverse off} "
+950 print"{right}  {183}{184}{reverse on}{206} {reverse off}{169} {223}{reverse on}{208}{reverse off}"
+960 print"{right}   {reverse on}{169} {reverse off}{169}    "
+970 print"{right}  {reverse on}{169} {reverse off}{169}{space*5}"
+990 print"{right*3}{184*3}{223}{reverse on}{205*3}{223}{reverse off}":return
+1000 print"{home}{light green}{down*4}{space*5}{164}{175}{185}{175}"
+1010 print"{right}   {reverse on}{169}  (q{223}{reverse off}"
+1020 print"{right}  {reverse on}{169}    ' {213}{reverse off}"
+1030 print"{right} {reverse on}{169}{space*5}) {reverse off}{169}"
+1040 print"{right}{reverse on}{169}{space*7}{reverse off}{169} "
+1050 print"{right}{reverse on} {163*2}{205}    {reverse off}  "
+1060 print"{right}{223}{reverse on}   {205}, ){223}{reverse off} "
+1080 print"{right}  {223}{reverse on}  {223}{reverse off}    "
+1090 print"{right}   {223}{reverse on}  {223}{reverse off}   "
+1100 print"{right}    {223}{reverse on} ){reverse off}   "
+1110 print"{right}    {reverse on}{169} {reverse off}{169}   "
+1120 print"{right}   {reverse on}{169} {reverse off}{169}    "
+1130 print"{right}  {reverse on}{169} {reverse off}{169}{space*5}"
+1150 print"{right*3}{184*3}{223}{reverse on}{205*3}{223}{reverse off}":return
+1160 ifpeek(aa-40)=fthenp=p+1:o=o+40
+1170 ifpeek(aa+40)=fthenp=p+1:o=o+40
+1180 ifpeek(aa+1)=fthenp=p+1:o=o+40
+1185 ac=co+aa-crt:pokeq+1,a
+1190 pokeaa,170:pokeaa-40,160:pokeaa+40,160:pokeaa-1,160:pokeaa+1,160
+1195 pokeac,4:pokeac-40,4:pokeac+40,4:pokeac-1,4:pokeac+1,4:pokeq+1,a*4
+1200 pokeac,2:pokeac-40,2:pokeac+40,2:pokeac-1,2:pokeac+1,2
+1205 pokeaa,32:pokeaa-40,32:pokeaa+40,32:pokeaa-1,32:pokeaa+1,32
+1210 p=p+1:g=crt+788:o=o+40:e=e+.3
+1220 forz=200to100step-5:pokeq+1,z:next:pokeq+4,0:return
+1230 pokeq+4,65:forz=63to0step-.2:pokeq+1,z:next:pokek,32:pokel,32:pokem,32
+1240 pokeq+4,0:print"{home}{down}"tab(37)"  "
+1270 ifp<40then1310
+1280 print"{white}{down}{right}he flies, he leaps tall buildings,"
+1290 print"{right}his tongue is magic - it's........"
+1300 printtab(8)"{down}{yellow}{reverse on} suuuperrrfrog!! ":goto1860
+1310 ifp>30thenprint"{down}{right}{white}  bullroarer, king of the pond!!":goto1360
+1320 ifp>25thenprint"{down}{right}{white}  a bullfrog, well fed!!":goto1360
+1330 ifp>15thenprint"{down}{right}{white}  a tree frog.":goto1360
+1340 ifp>10thenprint"{down}{right}{white}  a tadpole.":goto1360
+1360 ifmode=0thenfori=1to1000:getd$:ifd$=""thennext:run
+1365 ifmode=0thenmode=1:goto90
+1370 print"{cyan}{down}{space*7}play again?{space*11}{left*10}";:gosub60000
+1390 ifleft$(in$,1)="n"thenrun
+1400 print
+1500 ifmode=0thend=1:in$="5":goto1840
+1510 d=0:print"{up*2}{space*7}do you want three bugs?{space*11}{left*10}";:gosub60000
+1520 :
+1530 ifleft$(in$,1)<>"y"thend=1
+1540 goto1820
+1740 o=o+.3:pokeq+1,255:pokeq+4,33:pokeg,32:s=rnd(1):pokeq+4,0:ifs<.5theng=g-2
+1745 ifmode=0thenfc=int(rnd(1)*12)+6:ft=ft+1
+1750 g=g+1:ifs<.25theng=g-78
+1760 ifg<crt+72andd=1theng=crt+790:goto500
+1770 ifg<ffthen1810
+1780 ifg<eethen1800
+1790 g=g-42:pokeq+1,240:pokeq+4,33:pokeco+g-cr,1:pokeg,f:pokeq+4,0:goto500
+1800 g=g-40:pokeq+1,248:pokeq+4,33:pokeco+g-cr,1:pokeg,f:pokeq+4,0:goto500
+1810 g=g-41:pokeq+1,255:pokeq+4,33:pokeco+g-cr,1:pokeg,f:pokeq+4,0:goto500
+1820 print"{up*2} please enter skill level (0 thru 9){space*5}{left*4}";
+1830 gosub60000
+1835 t=val(in$):ift<0ort>9then1820
+1840 t=val(in$):e=(t*2)-4
+1850 goto140
+1860 pokeq+4,65:forz=1to5:forx=20to120:pokeq+1,x:next:forx=50to130:pokeq+1,x:next
+1870 forx=200to100step-.5:pokeq+1,x:next:next:pokeq+4,0:goto1360
+1880 end
+60000 poke198,0:in$=" ":zt=ti:zc=2:zd$=chr$(20)
+60010 fori=1to2000:getz$:ifz$<>""then60070
+60020 ifzt<=tithenprintmid$(" {175}",zc,1);"{left}";:zc=3-zc:zt=ti+20
+60030 next:run
+60070 z=asc(z$):zl=len(in$):if(zand127)<32thenprint" {left}";:goto60110
+60080 iffland(zand127)>64and(zand127)<91thenz$=chr$((z+128)and255)
+60090 ifzl>2then60010
+60100 in$=in$+z$:printz$;
+60110 ifz=13thenin$=mid$(in$,2):print:return
+60120 ifz=20andzl>1thenin$=left$(in$,zl-1):print"{left}";:goto60010
+60130 ifz=141thenz$=chr$(-20*(zl>1)):forz=2tozl:printz$;:nextz:goto60000
+60140 goto60010
+60200 gosub60500
+60210 print"{cyan}{space*9}press {reverse on}{purple} space {reverse off}{cyan} to begin";
+60240 fori=0to3000:gett$:ift$=""thennext:run
+60250 print"{clear}{down*11}":goto100
+60260 print"{clear}{space*37}"
+60265 gosub60500
+60270 return
+60500 fori=1to10:print"{192*4}";:next:return
+62000 print"{clear}{down*2}{cyan}{space*26}"pg$
+62010 print"{down}{pink}{space*35}{down}"
+62011 print"{down}{white}{space*37}{light blue}{down}"
+62020 gosub60500
+62030 print"{down}{light green}{space*9}>> back to nature <<"
+62040 ifmode=0thenfori=1to2000:getz$:ifz$=""thennext:goto100
+62050 mode=1
+62080 print"{down*3}{yellow}{space*5}do you need the directions?{space*9}{left*8}";:gosub60000
+62090 ifleft$(in$,1)<>"y"then100
+62100 print"{clear}{down}{cyan}{space*34}"
+62105 gosub60500
+62110 print"{white} froggy needs bugs to live. you control"
+62130 print"{down}{white} and {purple}height {white}....{reverse on}{light green}high{reverse off}   {orange}7{space*5}8{space*5}9"
+62140 print"{down}{white} with the{space*5}..{reverse on}{yellow}middle{reverse off} {orange}4{space*5}5{space*5}6"
+62150 print"{down}{white} number pad.   .{reverse on}{cyan}low{reverse off}    {orange}1{space*5}2{space*5}3"
+62160 print"{down*2}{white} the farther he has to reach, the more"
+62170 print"{down} energy he uses.  a higher skill level"
+62180 print"{down} will cause a bug to move more quickly"
+62190 print"{down} and the frog to consume more energy.{cyan}"
+62200 gosub60200
