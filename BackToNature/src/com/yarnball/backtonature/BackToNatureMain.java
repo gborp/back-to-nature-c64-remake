@@ -43,13 +43,12 @@ public class BackToNatureMain implements ApplicationListener {
 	private static final float ENERGY_USAGE_INCREASE_PER_FLY = 001f / 100f;
 	private static final float DEFAULT_ENERGY_USAGE_MULTIPLYER = 0.9f;
 	private static final float LOW_ENERGY_LEVEL = MAX_ENERGY * 0.3f;
-	private static final Color BORDER_COLOR = new Color(132f / 255f,
-			197f / 255f, 204f / 255f, 1);
+	private static final Color BORDER_COLOR = new Color(132f / 255f, 197f / 255f, 204f / 255f, 1);
 
 	private static final int END_OF_GAME_TOUCH_FREEZE_LENGTH = 25 * 3;
 	private static final int INTRO_TOUCH_FREEZE_LENGTH = 25 * 1;
 	private static final int GAME_TOUCH_FREEZE_LENGTH = 25 * 1;
-	private static final int MUTE_TOGGLE_RATE = 25;
+	private static final int MUTE_PRESS_WAIT = 25;
 
 	private Stage stage;
 	private BackgroundActor actorBackground;
@@ -81,7 +80,6 @@ public class BackToNatureMain implements ApplicationListener {
 	private int nextToungePos;
 	private float tickDelta;
 	private int frozeInputForTick;
-	private int lastMuteAt = -1;
 
 	protected Preferences getPrefs() {
 		return Gdx.app.getPreferences(PREFS_NAME);
@@ -156,6 +154,8 @@ public class BackToNatureMain implements ApplicationListener {
 		if (EngineState.getGameState() == gameState) {
 			return;
 		}
+
+		muteInitiatedAt = -1;
 		fingerDown = false;
 		nextFrogVerticalPos = -1;
 		nextToungePos = -1;
@@ -279,10 +279,23 @@ public class BackToNatureMain implements ApplicationListener {
 		}
 		tickCount++;
 
+		if (fingerDown && actualFingerPositionX > 320 - 48 && actualFingerPositionY > 200 - 48) {
+			if (muteInitiatedAt == -1) {
+				System.out.println("start mute initiated at " + tickCount);
+				muteInitiatedAt = tickCount;
+			} else if ((tickCount - muteInitiatedAt) > MUTE_PRESS_WAIT) {
+				System.out.println("Mute! at " + tickCount);
+				setMute(!EngineState.isMute());
+				muteInitiatedAt = -1;
+			}
+		} else {
+			muteInitiatedAt = -1;
+		}
+		actorMute.setHighLight(muteInitiatedAt != -1);
+
 		if (EngineState.getGameState() == GameState.INTRO) {
 			actorIntroText.tick();
-		} else if (EngineState.getGameState() == GameState.GAME
-				|| EngineState.getGameState() == GameState.END_GAME) {
+		} else if (EngineState.getGameState() == GameState.GAME || EngineState.getGameState() == GameState.END_GAME) {
 
 			if (EngineState.getGameState() == GameState.GAME) {
 				changeEnergy(-ENERGY_FOR_IDLE);
@@ -292,11 +305,9 @@ public class BackToNatureMain implements ApplicationListener {
 				}
 
 				PhaseType animPhase = frogAnimator.getPhase();
-				if (fingerDown
-						&& (animPhase == PhaseType.IDLE || animPhase == PhaseType.RETURN_TO_IDLE)) {
+				if (fingerDown && (animPhase == PhaseType.IDLE || animPhase == PhaseType.RETURN_TO_IDLE)) {
 
-					if (actualFingerPositionX > 87
-							&& actualFingerPositionY < 320) {
+					if (actualFingerPositionX > 87 && actualFingerPositionY < 320) {
 						int toungeTargetX = ((actualFingerPositionX - 88) / 8) + 2;
 						nextToungePos = toungeTargetX;
 						if (actualFingerPositionY < 95) {
@@ -310,8 +321,7 @@ public class BackToNatureMain implements ApplicationListener {
 				}
 			}
 
-			if (EngineState.getGameState() == GameState.END_GAME
-					&& tickCount % (25 * 15) == 0) {
+			if (EngineState.getGameState() == GameState.END_GAME && tickCount % (25 * 15) == 0) {
 				nextFrogVerticalPos = 3;
 				nextToungePos = 27;
 			}
@@ -319,8 +329,7 @@ public class BackToNatureMain implements ApplicationListener {
 			if (frogAnimator.getPhase() == PhaseType.IDLE) {
 				if (nextFrogVerticalPos != -1 && nextToungePos != -1) {
 
-					changeEnergy((nextFrogVerticalPos > 1 ? -ENERGY_FOR_STANDUP
-							: 0) - ENERGY_FOR_TOUNGE * nextToungePos);
+					changeEnergy((nextFrogVerticalPos > 1 ? -ENERGY_FOR_STANDUP : 0) - ENERGY_FOR_TOUNGE * nextToungePos);
 
 					frogAnimator.setTargetFrogPos(nextFrogVerticalPos);
 					frogAnimator.setTargetToungePos(nextToungePos);
@@ -354,8 +363,7 @@ public class BackToNatureMain implements ApplicationListener {
 						int fx2 = fx1 + 8;
 						int fy2 = fy1 + 8;
 
-						if (((fx1 >= tx1 && fx1 <= tx2) || (fx2 >= tx1 && fx2 <= tx2))
-								&& ((fy1 >= ty1 && fy1 <= ty2) || (fy2 >= ty1 && fy2 <= ty2))) {
+						if (((fx1 >= tx1 && fx1 <= tx2) || (fx2 >= tx1 && fx2 <= tx2)) && ((fy1 >= ty1 && fy1 <= ty2) || (fy2 >= ty1 && fy2 <= ty2))) {
 							fly.setHit(true);
 							frogAnimator.setPhase(PhaseType.TOUNGE_IN);
 							if (nextFlySpeed > MAX_FLY_SPEED) {
@@ -401,8 +409,7 @@ public class BackToNatureMain implements ApplicationListener {
 
 	@Override
 	public void render() {
-		Gdx.gl.glClearColor(BORDER_COLOR.r, BORDER_COLOR.g, BORDER_COLOR.b,
-				BORDER_COLOR.a);
+		Gdx.gl.glClearColor(BORDER_COLOR.r, BORDER_COLOR.g, BORDER_COLOR.b, BORDER_COLOR.a);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
 		float delta = Gdx.graphics.getDeltaTime();
@@ -434,9 +441,12 @@ public class BackToNatureMain implements ApplicationListener {
 		tickDelta = 0;
 	}
 
+	private long muteInitiatedAt = -1;
+
 	private boolean handleTouch(int screenX, int screenY) {
 
 		if (frozeInputForTick > 0) {
+			muteInitiatedAt = -1;
 			return false;
 		}
 
@@ -445,16 +455,7 @@ public class BackToNatureMain implements ApplicationListener {
 			return true;
 		}
 
-		Vector2 stagePos = stage.screenToStageCoordinates(new Vector2(screenX,
-				screenY));
-
-		if (stagePos.x > 320 - 48 && stagePos.y > 200 - 48) {
-			if (lastMuteAt == -1 || (tickCount - lastMuteAt) > MUTE_TOGGLE_RATE) {
-				lastMuteAt = tickCount;
-				setMute(!EngineState.isMute());
-			}
-			return true;
-		}
+		Vector2 stagePos = stage.screenToStageCoordinates(new Vector2(screenX, screenY));
 
 		if (EngineState.getGameState() == GameState.INTRO) {
 			if (stagePos.y < 200 - 76) {
@@ -500,8 +501,7 @@ public class BackToNatureMain implements ApplicationListener {
 			return false;
 		}
 
-		public boolean touchDown(int screenX, int screenY, int pointer,
-				int button) {
+		public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 			fingerDown = true;
 			return handleTouch(screenX, screenY);
 		}

@@ -1,6 +1,7 @@
 package com.yarnball.backtonature;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -12,6 +13,7 @@ public class MuteActor extends Actor {
 	private Sprite sprite;
 	private Texture txtMuteOn;
 	private Texture txtMuteOff;
+	private boolean highlight;
 
 	public MuteActor() {
 		txtMuteOn = new Texture(Gdx.files.internal("data/muteon.png"));
@@ -36,6 +38,14 @@ public class MuteActor extends Actor {
 			sprite.setTexture(txtMuteOn);
 		} else {
 			sprite.setTexture(txtMuteOff);
+		}
+
+	}
+
+	public void setHighLight(boolean highlight) {
+		if (this.highlight != highlight) {
+			this.highlight = highlight;
+			sprite.setColor(highlight ? Color.GREEN : Color.WHITE);
 		}
 
 	}
