@@ -70,4 +70,8 @@ public class FrogActor extends Actor {
 		}
 	}
 
+	public void resetDefaultPosition() {
+		setPosition(8, 37);
+	}
+
 }

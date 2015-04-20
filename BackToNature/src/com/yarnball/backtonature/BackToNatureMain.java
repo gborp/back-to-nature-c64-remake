@@ -32,6 +32,8 @@ public class BackToNatureMain implements ApplicationListener {
 	private static final int FLY_COUNT_AT_GAME_START_HARD = 1;
 
 	private static final float DEFAULT_FLY_SPEED = 10;
+	private static final float INTRO_FLY_SPEED = 50;
+	private static final float OUTRO_FLY_SPEED = 100;
 	private static final float NEXT_FLY_FASTER_BY = 0.2f;
 	private static final float MAX_FLY_SPEED = 1f;
 
@@ -165,7 +167,11 @@ public class BackToNatureMain implements ApplicationListener {
 			actorBackground.setVisible(false);
 			actorIntroBackground.setVisible(true);
 			actorIntroText.setVisible(true);
-			actorFrog.setVisible(false);
+
+			actorFrog.setVisible(true);
+			actorFrog.setVerticalPos(1);
+			actorFrog.setPosition(24, 64);
+
 			actorTounge.setVisible(false);
 			actorFlyCounter.setVisible(false);
 			actorEnergy.setVisible(false);
@@ -175,11 +181,17 @@ public class BackToNatureMain implements ApplicationListener {
 			for (FlyActor fly : lstActorFly) {
 				fly.setVisible(false);
 			}
+			nextFlySpeed = INTRO_FLY_SPEED;
+			for (int i = 0; i < MAX_FLY_COUNT; i++) {
+				bornFly();
+			}
+
 		} else if (gameState == GameState.GAME) {
 			frozeInputForTick = GAME_TOUCH_FREEZE_LENGTH;
 			actorBackground.setVisible(true);
 			actorIntroBackground.setVisible(false);
 			actorIntroText.setVisible(false);
+			actorFrog.resetDefaultPosition();
 			actorFrog.setVisible(true);
 			actorFrog.setVerticalPos(3);
 			actorTounge.setVisible(true);
@@ -209,6 +221,10 @@ public class BackToNatureMain implements ApplicationListener {
 				break;
 			}
 
+			for (FlyActor fly : lstActorFly) {
+				fly.setVisible(false);
+			}
+
 			for (int i = 0; i < flyCountAtGameStart; i++) {
 				bornFly();
 			}
@@ -233,6 +249,10 @@ public class BackToNatureMain implements ApplicationListener {
 			actorEndText.setVisible(true);
 			for (FlyActor fly : lstActorFly) {
 				fly.setVisible(false);
+			}
+			nextFlySpeed = OUTRO_FLY_SPEED;
+			for (int i = 0; i < MAX_FLY_COUNT; i++) {
+				bornFly();
 			}
 		}
 		EngineState.setGameState(gameState);
@@ -295,6 +315,11 @@ public class BackToNatureMain implements ApplicationListener {
 
 		if (EngineState.getGameState() == GameState.INTRO) {
 			actorIntroText.tick();
+			for (FlyActor fly : lstActorFly) {
+				if (fly.isVisible()) {
+					fly.tick();
+				}
+			}
 		} else if (EngineState.getGameState() == GameState.GAME || EngineState.getGameState() == GameState.END_GAME) {
 
 			if (EngineState.getGameState() == GameState.GAME) {
@@ -468,13 +493,12 @@ public class BackToNatureMain implements ApplicationListener {
 				}
 				switchGameState(GameState.GAME);
 			}
-			return true;
 		}
 
 		actualFingerPositionX = (int) stagePos.x;
 		actualFingerPositionY = (int) stagePos.y;
 
-		return false;
+		return true;
 	}
 
 	private class InputProc implements InputProcessor {
