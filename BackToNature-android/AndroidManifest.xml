@@ -3,8 +3,8 @@
     package="com.yarnball.backtonature"
     android:installLocation="auto"
     android:screenOrientation="landscape"
-    android:versionCode="3"
-    android:versionName="1.2" >
+    android:versionCode="4"
+    android:versionName="1.3" >
 
     <supports-screens
         android:anyDensity="true"
